@@ -16,31 +16,16 @@ void MprpcConfig::LoadConfigFile(const char* config_file)
         fgets(buf, 512, pf);
 
         // 去掉字符串前面多余的空格
-        std::string src_buf(buf);
-        // 找到第一个不为空格的索引
-        int idx = src_buf.find_first_not_of(' ');
-        if(idx != -1)
-        {
-            // 说明字符串前面有空格
-            src_buf = src_buf.substr(idx, src_buf.size()-idx);
-        }
-
-        // 找到最后一个不为空格的索引
-        idx = src_buf.find_last_not_of(' ');
-        if(idx != -1)
-        {
-            // 说明字符串后面有空格
-            src_buf = src_buf.substr(0, idx+1);
-        }
+        std::string read_buf(buf);
 
         // 判断#号注释或者空行
-        if(src_buf[0] == '#' || src_buf.empty())
+        if(read_buf[0] == '#' || read_buf.empty())
         {
             continue;
         }
 
         // 解析配置项
-        idx = src_buf.find('=');
+        int idx = read_buf.find('=');
         if(idx == -1)
         {
            // 配置项不合法
@@ -50,8 +35,11 @@ void MprpcConfig::LoadConfigFile(const char* config_file)
         std::string value;
         std::string key;
 
-        key = src_buf.substr(0, idx);
-        value = src_buf.substr(idx+1, src_buf.size()-idx);
+        key = read_buf.substr(0, idx);
+        Trim(key);
+        int endidx = read_buf.find('\n', idx);
+        value = read_buf.substr(idx+1, endidx-idx-1);
+        Trim(value);
         m_configMap.insert(std::pair<std::string,std::string>(key,value));
 
     }
@@ -66,4 +54,24 @@ std::string MprpcConfig::Load(const std::string& key)
         return "";
     }
     return it->second;
+}
+
+// 去掉字符串前后的空格
+void MprpcConfig::Trim(std::string& src_buf)
+{
+    // 找到第一个不为空格的索引
+    int idx = src_buf.find_first_not_of(' ');
+    if(idx != -1)
+    {
+        // 说明字符串前面有空格
+        src_buf = src_buf.substr(idx, src_buf.size()-idx);
+    }
+
+    // 找到最后一个不为空格的索引
+    idx = src_buf.find_last_not_of(' ');
+    if(idx != -1)
+    {
+        // 说明字符串后面有空格
+        src_buf = src_buf.substr(0, idx+1);
+    }
 }
