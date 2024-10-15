@@ -37,5 +37,5 @@ class RpcProvider {
     void OnConnection(const muduo::net::TcpConnectionPtr& conn);
 
     // 发现缓冲区可读写, 则执行该回调函数
-    void OnMessage(const muduo::net::TcpConnectionPtr&, muduo::net::Buffer*, muduo::Timestamp);
+    void OnMessage(const muduo::net::TcpConnectionPtr& conn, muduo::net::Buffer* buffer, muduo::Timestamp);
 };
