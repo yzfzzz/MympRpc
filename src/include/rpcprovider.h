@@ -38,4 +38,7 @@ class RpcProvider {
 
     // 发现缓冲区可读写, 则执行该回调函数
     void OnMessage(const muduo::net::TcpConnectionPtr& conn, muduo::net::Buffer* buffer, muduo::Timestamp);
+
+    // Closure的回调操作, 用于序列化rpc的响应和网络发送
+    void SendRpcResponse(const muduo::net::TcpConnectionPtr& conn, google::protobuf::Message*);
 };
