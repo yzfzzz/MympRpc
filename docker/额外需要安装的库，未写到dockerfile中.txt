@@ -1,3 +1,4 @@
 apt-get install libboost-all-dev
 muduo库 https://blog.csdn.net/QIANGWEIYUAN/article/details/89023980
 apt-get install zip
+apt-get install  gdb
