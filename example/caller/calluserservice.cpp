@@ -25,7 +25,20 @@ int main(int argc, char** argv) {
         std::cout << "rpc login response error:" << response.result().errmsg() << std::endl;
     }
 
+    fixbug::RegisterRequest req;
+    req.set_id(2000);
+    req.set_name("mrpc");
+    req.set_pwd("66666");
+    fixbug::RegisterResponse rsp;
+    stub.Register(nullptr, &req, &rsp, nullptr);
 
+    if (rsp.result().errcode() == 0) {
+        // 调用正确
+        std::cout << "rpc registerRegister response:" << rsp.success() << std::endl;
+    } else {
+        // 调用失败
+        std::cout << "rpc register response error:" << rsp.result().errmsg() << std::endl;
+    }
     
     return 0;
 }

@@ -25,8 +25,6 @@ message LoginResponse {
   bool success = 2;
 }
 
-message GetFriendListsRequest { uint32 userid = 1; }
-
 message User {
   bytes name = 1;
   uint32 age = 2;
@@ -37,16 +35,23 @@ message User {
   Sex sex = 3;
 }
 
-message GetFriendListsResponse {
-  ResultCode result = 1;
-  bool success = 2;
-  // 存储列表
-  repeated User friend_list = 3;
+message RegisterRequest
+{
+  uint32 id = 1;
+    // 1 表示数据的序号
+    bytes name = 2; // bytes = string
+    bytes pwd = 3;
+}
+
+message RegisterResponse
+{
+    ResultCode result = 1;
+    bool success = 2;
 }
 
 // 在protobuf里面定义描述rpc方法的类型 -service
 service UserServiceRpc {
   // 调用的服务名+传入参数+返回结果（传出参数）
   rpc Login(LoginRequest) returns (LoginResponse);
-  rpc GetFriendList(GetFriendListsRequest) returns (GetFriendListsResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
 }

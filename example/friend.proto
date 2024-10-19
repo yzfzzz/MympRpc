@@ -1,0 +1,25 @@
+// 声明protobuf的版本
+syntax = "proto3";
+// 声明代码所在的包, 相当他cpp的namespace
+package fixbug;
+
+// 定义下面选项, 表示生成service服务类和rpc方法描述, 默认不生成
+option cc_generic_services = true;
+
+message ResultCode {
+  int32 errcode = 1;
+  bytes errmsg = 2;
+  bool success = 3;
+}
+
+message GetFriendListsRequest { uint32 userid = 1; }
+
+message GetFriendListsResponse {
+  ResultCode result = 1;
+  repeated bytes friends = 2;
+}
+
+// 好友模块
+service FriendServiceRpc {
+    rpc GetFriendsList(GetFriendListsRequest) returns (GetFriendListsResponse);
+}

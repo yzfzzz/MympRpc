@@ -6,14 +6,15 @@ service_name => service描述
                         ==> service* 记录服务对象
                         method_name => method方法对象
 */
+// 存储 UserService类、对应的函数, 方便随时调用
 void RpcProvider::NotifyService(google::protobuf::Service* service) {
     ServiceInfo service_info;
     // 获取服务对象的描述信息
     const google::protobuf::ServiceDescriptor* pserviceDesc = service->GetDescriptor();
     // 获取服务的名字
-    std::string service_name = pserviceDesc->name();
+    std::string service_name = pserviceDesc->name();  // UserService
     // 获取服务对象service的方法数量
-    int methodCnt = pserviceDesc->method_count();
+    int methodCnt = pserviceDesc->method_count();  // 2
 
     std::cout << "service_name: " << service_name << std::endl;
 
@@ -137,6 +138,9 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr& conn, muduo::net
     google::protobuf::Message* response = service->GetResponsePrototype(method).New();
 
     // 给下面的method方法的调用, 绑定一个Closure的回调函数
+    // 调用的是callback.h文件的482行的函数
+    // inline Closure* NewCallback(Class* object,
+    //                              void (Class::*method)(Arg1, Arg2),Arg1 arg1, Arg2 arg2)
     google::protobuf::Closure* done =
         google::protobuf::NewCallback<RpcProvider, const muduo::net::TcpConnectionPtr&,
                                       google::protobuf::Message*>(
