@@ -1,3 +1,12 @@
 {
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript",
+        "typeindex": "cpp",
+        "typeinfo": "cpp",
+        "*.ipp": "cpp",
+        "future": "cpp"
+    }
 }
