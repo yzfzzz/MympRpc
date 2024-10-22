@@ -18,4 +18,4 @@ public:
 private:
     // zk¿Í»§¶ËµÄ¾ä±ú
     zhandle_t *m_zhandle;
-}
+};

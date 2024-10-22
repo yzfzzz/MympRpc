@@ -45,7 +45,4 @@ void MprpcApplication::Init(int argc, char** argv) {
     std::cout << "zookeeperport = " << m_config.Load("zookeeperport") << std::endl;
 }
 
-MprpcConfig& MprpcApplication::GetConfig()
-{
-    return m_config;
-}
+MprpcConfig& MprpcApplication::GetConfig() { return m_config; }
